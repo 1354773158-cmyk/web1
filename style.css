@@ -1,0 +1,263 @@
+:root {
+    --sky-blue: #E0F7FA;
+    --deep-teal: #0097A7;
+    --darker-teal: #006064;
+    --container-width: 1100px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: sans-serif; overflow-x: hidden; }
+
+/* 第一部分：背景图 */
+.section-hero {
+    height: 75vh;
+    background: url('image/南澳大桥.png') no-repeat center center/cover;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.hero-content { color: white; text-align: center; }
+
+/* 容器与对齐 */
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    position: relative;
+}
+
+/* 波浪通用样式 */
+.wave-container-top  {
+    position: absolute;
+    bottom: -20px;
+    width: 100%;
+    line-height: 0;
+}
+
+
+.wave-svg { width: 100%; height: 100px; }
+
+/* 矢量图1：靠右对齐 */
+.vector-top-right {
+    position: absolute;
+    right: calc((100% - var(--container-width)) / 2); /* 关键对齐：对齐Container右侧 */
+    width: 20%; 
+    z-index: 10;
+    transform: translateY(-70px)
+}
+
+/* 第二部分 */
+.section-intro {
+    background-color: var(--sky-blue);
+    padding: 200px 0 270px 0;
+    position: relative;
+    z-index: 1; /* 较低层级 */
+}
+.intro-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/* 对齐：左文字距左 = 地图距右 */
+.intro-text { flex: 1; }
+.map-wrapper { flex: 1; text-align: right; }
+.cartoon-map { width: 90%; }
+
+/* 矢量图2：左侧跨层级遮挡 */
+.vector-overlap-left {
+    position: absolute;
+    width: 400px; /* 或者使用百分比，如 15% */
+    height: auto; /* 保持比例 */
+    left: 0;
+    bottom: -50px; /* 向下偏移进入S3区域 */
+    z-index: 5; /* 在S2之上，但S3背景通过z-index管理会遮挡它 */
+}
+
+/* 第三部分 */
+.section-spots {
+    background-color: var(--deep-teal);
+    padding: 20px 0 80px 0;
+    position: relative;
+    z-index: 10; /* 较高层级，实现对上面矢量图的遮挡 */
+    margin-top: 30px;
+}
+
+.spots-header { padding-top: 50px; }
+.white-label { color: white; font-size: 1.5rem; }
+
+/* 卡片布局：横跨在波浪线上 */
+.card-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 确保卡片中间在波浪线上 */
+    margin-top: -300px; /* 向上拉，使其压在波浪线上 */
+    padding-bottom: 50px;
+    margin-left: 200px; 
+    gap: 10px; 
+}
+
+.card {
+    width: 22%;
+    height: 320px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+}
+.card-top { height: 75%; background-size: cover; background-position: center; position: relative; }
+.card-bottom { height: 25%; padding: 15px; color: black; font-weight: bold; text-align: left; }
+
+/* 错落高度 */
+.card-1, .card-3 {
+    transform: translateY(-20px); 
+}
+.card-2 {
+    transform: translateY(30px); 
+}
+
+.card-4 {
+    transform: translateY(10px);  
+}
+
+/* 黄色标签装饰 */
+.loc-tag {
+    position: absolute;
+    bottom: -15px; /* 图片与底座交界处 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 30px;
+    background: #FFEB3B;
+    border: 3px solid white;
+    border-radius: 50% 50% 50% 0;
+    transform: translateX(-50%) rotate(-45deg);
+    z-index: 2;
+}
+/* --- 卡片悬浮反馈动效 --- */
+
+/* 1. 先给卡片设置基础过渡动画，让动作变丝滑 */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+/* 2. 鼠标悬浮（Hover）时的状态 */
+
+.card-1:hover, .card-3:hover {
+    transform: translateY(-35px);
+}
+
+.card-2:hover {
+    transform: translateY(15px);
+}
+
+.card-4:hover {
+    transform: translateY(-5px);
+}
+
+/* 3. 如果卡片里有黄色定位标签，让它也动一下（可选） */
+.card:hover .loc-tag {
+    background-color: #FFEE58; /* 悬浮时标签变亮一点 */
+    transition: 0.3s;
+}
+
+.wave-container-bottom {
+    position: absolute;
+    bottom: -40px;
+    width: 100%;
+    line-height: 0;
+    z-index: 10; 
+}
+
+/* 底部 Notice 栏 */
+.notice-bar {
+    background-color: var(--darker-teal);
+    border-radius: 20px 20px 0 0;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-size: 0.9rem;
+    transform: translateY(40px); 
+}
+.notice-links a { color: white; text-decoration: none; margin-left: 20px; }
+
+
+/* --- 文字大小 --- */
+
+/* 1. 第一部分：大背景图上的文字 */
+.hero-content h1 { 
+    font-size: 80px;    /* 风景图上的大标题大小 */
+}
+.hero-content p { 
+    font-size: 24px;    /* 风景图上的描述文字大小 */
+}
+
+/* 2. 第二部分：中间天蓝色区域文字 */
+.styled-title { 
+    font-size: 64px;    /* “南澳岛”三个设计字的大小 */
+    transform: translateY(-40px); 
+}
+.desc { 
+    font-size: 18px;    /* 南澳岛简短介绍文字的大小 */
+    line-height: 1.6;   /* 顺便调整行间距，让阅读更舒适 */
+}
+
+/* 3. 第三部分：著名景点标题 */
+.white-label { 
+    font-size: 32px;    /* “著名景点”四个字的大小 */
+        transform: translateY(-40px); 
+}
+
+/* 4. 卡片内的景点名称 */
+.card-bottom { 
+    font-size: 20px;    /* 卡片下方白底黑字的大小 */
+
+}
+
+/* 5. 底部 Notice 栏文字 */
+.notice-bar { 
+    font-size: 14px;    /* 底部所有小字的大小 */
+    color: #FFEB3B
+}
+.notice-title {
+    font-size: 16px;    /* 特别调整“notice”单词的大小 */
+    font-weight: bold;
+}
+
+/* 给“著名景点”文字下方加装饰线 */
+.white-label {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.white-label::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px;      /* 横线的长度 */
+    height: 3px;      /* 横线的粗细 */
+    background-color: #FFEB3B; /* 使用你的黄色标签同色 */
+    border-radius: 2px;
+}
+
+/* 1. 给 notice 链接容器设置 flex 布局，方便对齐 */
+.notice-links {
+    display: flex;
+    align-items: center;
+    gap: 25px; /* 控制链接与竖线的间距 */
+}
+
+/* 2. 在第一个链接后面添加竖线 */
+.notice-links a:not(:last-child)::after {
+    content: "|";          /* 插入竖线 */
+    margin-left: 50px;     /* 竖线距离左边文字的距离 */
+    color: rgba(255, 255, 255, 0.5); /* 调淡竖线颜色，看起来更高级 */
+    font-size: 14px;       /* 调整竖线大小 */
+    pointer-events: none;  /* 确保竖线不可点击 */
+}
